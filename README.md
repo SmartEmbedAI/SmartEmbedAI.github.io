@@ -1,1 +1,1 @@
-Hello, World!
+SmartEmbedAI专注于嵌入式语音AI。
