@@ -2,31 +2,207 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>我的下载页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartEmbedAI</title>
     <style>
-        /* 给按钮添加一些简单的样式 */
-        .download-btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #2ea44f; /* GitHub 绿色 */
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            font-family: Arial, sans-serif;
-            font-weight: bold;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; display: flex; min-height: 100vh; background: #f5f7fa; color: #333; }
+        a { text-decoration: none; color: inherit; cursor: pointer; }
+
+        /* 左侧导航 */
+        .sidebar {
+            width: 220px; background: #1e293b; color: #fff;
+            position: fixed; top: 0; left: 0; bottom: 0; z-index: 100;
+            display: flex; flex-direction: column;
         }
-        .download-btn:hover {
-            background-color: #2c974b; /* 鼠标悬停时的颜色 */
+        .sidebar .logo { padding: 24px 20px; font-size: 18px; font-weight: 700; border-bottom: 1px solid rgba(255,255,255,0.08); text-align: center; }
+        .sidebar nav { padding: 16px 0; flex: 1; }
+        .sidebar nav a {
+            display: flex; align-items: center; justify-content: center; /* 文字居中 */
+            padding: 14px 20px; font-size: 15px; color: rgba(255,255,255,0.7);
+            transition: all 0.2s;
         }
+        .sidebar nav a:hover, .sidebar nav a.active {
+            background: rgba(255,255,255,0.08); color: #fff; border-right: 3px solid #3b82f6;
+        }
+
+        /* 右侧内容区 */
+        .main { flex: 1; margin-left: 220px; padding: 40px 48px; max-width: 1000px; }
+
+        /* ⭐ 关键：内容区默认隐藏，active 显示 */
+        .content-section { display: none; animation: fadeIn 0.3s ease; }
+        .content-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* 文字内容样式 */
+        .content-section h1 { font-size: 28px; font-weight: 700; margin-bottom: 12px; color: #1e293b; }
+        .content-section .subtitle { font-size: 16px; color: #64748b; margin-bottom: 32px; line-height: 1.6; }
+        .content-section .detail { background: #fff; border-radius: 12px; padding: 32px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); line-height: 2; color: #475569; font-size: 15px; }
+        .content-section .detail h3 { font-size: 18px; color: #1e293b; margin: 24px 0 12px; padding-left: 12px; border-left: 3px solid #3b82f6; }
+        .content-section .detail h3:first-child { margin-top: 0; }
+        .content-section .detail ul { padding-left: 20px; margin: 8px 0; }
+        .content-section .detail li { margin-bottom: 6px; }
     </style>
 </head>
 <body>
-    <h1>欢迎来到我的网页</h1>
-    <p>点击下方按钮下载资源包：</p>
-    
-    <!-- 下载按钮 -->
-    <a href="https://raw.githubusercontent.com/SmartEmbedAI/SmartEmbedAI.github.io/refs/heads/main/release.tar.gz" class="download-btn">
-        下载 ZIP 文件
-    </a>
+
+<!-- ====== 左侧菜单：添加 data-target ====== -->
+<aside class="sidebar">
+    <div class="logo">SmartEmbedAI</div>
+    <nav id="nav-menu">
+        <a class="active" data-target="sec-noise"><span>语音降噪</span></a>
+        <a data-target="sec-aec"><span>回声消除</span></a>
+        <a data-target="sec-wake"><span>语音唤醒</span></a>
+        <a data-target="sec-asr"><span>语音识别</span></a>
+        <a data-target="sec-tts"><span>语音合成</span></a>
+        <a data-target="sec-music"><span>音乐分离</span></a>
+    </nav>
+</aside>
+
+<!-- ====== 右侧内容：每个菜单对应一个 section ====== -->
+<main class="main">
+
+    <!-- 语音降噪 -->
+    <div id="sec-noise" class="content-section active">
+        <h1>语音降噪</h1>
+        <p class="subtitle">基于深度学习的实时语音增强技术，有效抑制环境噪声，提升通话与录音清晰度。</p>
+        <div class="detail">
+            <h3>核心技术</h3>
+            <ul>
+                <li>采用 RNNoise + DeepFilterNet 混合模型，兼顾低延迟与高降噪精度</li>
+                <li>支持稳态噪声（空调/风扇）与非稳态噪声（键盘/人声干扰）双重抑制</li>
+                <li>端到端处理延迟 < 10ms，CPU 占用率 < 5%</li>
+            </ul>
+            <h3>应用场景</h3>
+            <ul>
+                <li>视频会议 / 在线课堂 / 直播推流</li>
+                <li>智能客服通话录音质检</li>
+                <li>车载语音交互前处理</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 回声消除 -->
+    <div id="sec-aec" class="content-section">
+        <h1>回声消除</h1>
+        <p class="subtitle">精准消除扬声器播放声音被麦克风再次采集产生的回声，保障双工通话体验。</p>
+        <div class="detail">
+            <h3>技术原理</h3>
+            <ul>
+                <li>自适应滤波器估计回声路径，从近端信号中减去远端参考信号的副本</li>
+                <li>结合非线性残余回声抑制，解决双讲场景下的回声泄露问题</li>
+                <li>支持 16kHz / 48kHz 多采样率，适配各类音频硬件</li>
+            </ul>
+            <h3>性能指标</h3>
+            <ul>
+                <li>ERLE（回声回损增强）≥ 30dB</li>
+                <li>双讲透明度 > 95%，不影响正常对话</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 语音唤醒 -->
+    <div id="sec-wake" class="content-section">
+        <h1>语音唤醒</h1>
+        <p class="subtitle">低功耗关键词检测技术，让设备随时待命响应自定义唤醒词。</p>
+        <div class="detail">
+            <h3>产品特性</h3>
+            <ul>
+                <li>支持自定义唤醒词，3~8 字中文/英文均可训练</li>
+                <li>误唤醒率 < 1次/24小时，拒识率 < 1%</li>
+                <li>模型大小 < 500KB，可在 MCU / DSP 等嵌入式芯片上运行</li>
+            </ul>
+            <h3>典型应用</h3>
+            <ul>
+                <li>智能音箱 / 智能家居面板</li>
+                <li>车载语音助手</li>
+                <li>可穿戴设备免提操控</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 语音识别 -->
+    <div id="sec-asr" class="content-section">
+        <h1>语音识别</h1>
+        <p class="subtitle">高精度语音转文字服务，支持实时流式与离线文件转写。</p>
+        <div class="detail">
+            <h3>能力概览</h3>
+            <ul>
+                <li>普通话识别准确率 ≥ 98%（安静环境）</li>
+                <li>支持中英混合、方言（粤语/四川话等）识别</li>
+                <li>实时流式响应时间 < 300ms，支持标点智能预测</li>
+            </ul>
+            <h3>接入方式</h3>
+            <ul>
+                <li>WebSocket 实时流式接口</li>
+                <li>RESTful 离线文件转写接口</li>
+                <li>Android / iOS / Windows SDK</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 语音合成 -->
+    <div id="sec-tts" class="content-section">
+        <h1>语音合成</h1>
+        <p class="subtitle">自然流畅的文字转语音服务，提供多种音色与情感风格选择。</p>
+        <div class="detail">
+            <h3>音色库</h3>
+            <ul>
+                <li>预置 20+ 高品质音色：新闻播报 / 温柔女声 / 活力男声 / 童声等</li>
+                <li>支持声音克隆，仅需 5 分钟录音即可定制专属音色</li>
+                <li>支持 SSML 标记语言，精细控制语速、停顿、重音</li>
+            </ul>
+            <h3>技术指标</h3>
+            <ul>
+                <li>MOS 评分 ≥ 4.5（满分5分）</li>
+                <li>首包延迟 < 200ms，支持流式播放</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 音乐分离 -->
+    <div id="sec-music" class="content-section">
+        <h1>音乐分离</h1>
+        <p class="subtitle">AI 驱动的音源分离技术，将混合音频拆分为人声、伴奏、鼓点等独立轨道。</p>
+        <div class="detail">
+            <h3>分离能力</h3>
+            <ul>
+                <li>支持 4-Stem 分离：人声 / 贝斯 / 鼓 / 其他乐器</li>
+                <li>支持 2-Stem 快速分离：纯人声 / 纯伴奏</li>
+                <li>分离后音质损失 < 3dB，无明显相位失真</li>
+            </ul>
+            <h3>使用场景</h3>
+            <ul>
+                <li>K歌 App 伴奏提取</li>
+                <li>音乐制作采样 / Remix</li>
+                <li>影视后期对白提取</li>
+            </ul>
+        </div>
+    </div>
+
+</main>
+
+<!-- ====== ⭐ 切换逻辑 ====== -->
+<script>
+    const navLinks = document.querySelectorAll('#nav-menu a');
+    const sections = document.querySelectorAll('.content-section');
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('data-target');
+
+            // 切换菜单高亮
+            navLinks.forEach(l => l.classList.remove('active'));
+            this.classList.add('active');
+
+            // 切换内容显示
+            sections.forEach(sec => sec.classList.remove('active'));
+            const target = document.getElementById(targetId);
+            if (target) target.classList.add('active');
+        });
+    });
+</script>
+
 </body>
 </html>
