@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>语音降噪</title>
+<style>
+body{padding:30px;max-width:1000px}
+h1{margin-bottom:20px;color:#222}
+h3{margin:16px 0 8px}
+ul{margin-left:20px;line-height:1.8}
+p{line-height:1.7;margin:8px 0}
+</style>
+</head>
+<body>
+
+<h1>语音降噪</h1>
+
+<p>基于NN神经网络技术，有效抑制各种噪声，提升语音清晰度，为下游任务提供高质量的音质。</p>
+<br>
+
+<h2>专业版</h2>
+
+<p>主打降噪效果，噪声抑制的比较多，几乎没有残留，人耳听感较好，适合对音质要求比较高的场景。</p>
+
+
+<ul>
+<li>算法用C++编写，模型参数量2.5M左右，依赖onnxruntime，只能跑在Linux，安卓等平台上</li>
+<li>数据要求：采样率16k，位深16bit，单通道；一帧规定10ms，支持任意数量帧输入</li>
+<li>输入帧多：计算效率高，但内存和延迟增大；反之帧少：计算效率低，但内存和延迟也减小</li>
+<li>demo提供的库在ubutnu26.04上编译，gcc版本15.2.0，如果报错，请升级到相应的版本</li>
+</ul>
+
+<br>
+
+<p>demo运行步骤：</p>
+
+<ul>
+<li><a href="https://github.com/SmartEmbedAI/SmartEmbedAI.github.io/releases/download/nn_denoise_v1.0/nn_denoise_16k_pro_linux-x86.tar.gz">下载开发包</a></li>
+<li>解压：tar zxvf nn_denoise_16k_pro_linux-x86.tar.gz</li>
+<li>编译：bash ./build.sh，生成可执行文件test</li>
+<li>运行：bash ./run.sh，输入test.wav，输出out.wav</li>
+</ul>
+
+
+<h2>轻量版</h2>
+
+<p>主打高性价比，相比于专业版，降噪效果略有下降，但整体效果还不错，依然能满足大部分场景需求。</p>
+
+<ul>
+<li>算法用纯C语言编写，模型参数量90K左右，不依赖任何第三方库，能跑在大部分rtos平台上</li>
+<li>数据要求：采样率16k，位深16bit，单通道；一帧规定16ms，也支持任意数量帧输入</li>
+<li>因为有些rtos不支持动态内存分配，所以输入帧写死了为一帧，可根据实际情况进行修改</li>
+<li>demo提供的库在ubutnu26.04上编译，gcc版本15.2.0，如果报错，请升级到相应的版本</li>
+</ul>
+
+<p>demo运行步骤：</p>
+
+<ul>
+<li><a href="https://github.com/SmartEmbedAI/SmartEmbedAI.github.io/releases/download/nn_denoise_v1.0/nn_denoise_16k_lite_linux-x86.tar.gz">下载开发包</a></li>
+<li>解压：tar zxvf nn_denoise_16k_lite_linux-x86.tar.gz</li>
+<li>编译：bash ./build.sh，生成可执行文件test</li>
+<li>运行：bash ./run.sh，输入test.wav，输出out.wav</li>
+</ul>
+
+<h2>注意：</h2>
+
+<ul>
+<li>两个版本都支持流式实时降噪，即支持任意大小帧输入，可根据实际需求进行调整</li>
+<li>demo运行过程中会输出rtf值，实际应用中只有rtf小于1，才不会丢帧影响降噪效果</li>
+<li>提供的demo仅供测试使用，使用限制1小时，超时process函数会返回-100</li>
+</ul>
+
+</body>
+</html>

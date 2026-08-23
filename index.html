@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>SmartEmbedAI</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{display:flex;height:100vh}
+/* 左侧导航栏 */
+.sidebar{
+  width:240px;
+  background:#222;
+  color:#fff;
+  padding-top:20px;
+}
+.sidebar h2{
+  padding:0 20px 20px;
+  font-size:20px;
+  border-bottom:1px solid #444;
+  margin-bottom:10px;
+  text-align: center;
+}
+.sidebar a{
+  display:block;
+  color:#ccc;
+  text-decoration:none;
+  padding:12px 20px;
+  text-align: center; /* 导航文字居中 */
+}
+.sidebar a:hover{background:#383838;color:#fff}
+.sidebar a.active{background:#007acc;color:#fff}
+/* 右侧内容区域 */
+.content{flex:1}
+iframe{width:100%;height:100%;border:none}
+</style>
+</head>
+<body>
+  <div class="sidebar">
+    <h2>SmartEmbedAI</h2>
+    <a href="intro.html" target="mainFrame" class="active">技术简介</a>
+    <a href="denoise.html" target="mainFrame">语音降噪</a>
+    <a href="aec.html" target="mainFrame">回声消除</a>
+  </div>
+  <div class="content">
+    <iframe name="mainFrame" src="intro.html"></iframe>
+  </div>
+
+<script>
+// 导航高亮切换
+const links = document.querySelectorAll('.sidebar a');
+links.forEach(link=>{
+  link.onclick = function(){
+    links.forEach(l=>l.classList.remove('active'));
+    this.classList.add('active');
+  }
+})
+</script>
+</body>
+</html>
