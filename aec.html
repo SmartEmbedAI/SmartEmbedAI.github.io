@@ -13,7 +13,29 @@ p{line-height:1.7;margin:8px 0}
 </head>
 <body>
 
-<h1>Coming soon...</h1>
+<h1>回声消除</h1>
+
+<p>基于LSTM深度学习技术，能够有效捕获语音序列之间的依赖关系，相比传统的自适应滤波器方法，<br>
+NN_AEC能更好地处理非线性回声，尤其是在双讲环境下，并对背景噪声有显著的抑制作用。</p><br>
+
+<ul>
+<li>算法用C++编写，模型参数量1.8M，依赖tensorflow推理框架</li>
+<li>数据要求：采样率16k，位深16bit，单通道</li>
+<li>流式实时消除，输入为一帧数据8ms，即128个short长度</li>
+<li>demo提供的库在ubutnu26.04上编译，gcc版本15.2.0，如果报错，请升级版本</li>
+</ul>
+
+<br>
+
+<p>demo运行步骤：</p>
+
+<ul>
+<li><a href="https://github.com/SmartEmbedAI/SmartEmbedAI.github.io/releases/download/nn_aec/nn_aec_16k_linux-x64.tar.gz">下载开发包</a></li>
+<li>解压：tar zxvf nn_aec_16k_linux-x64.tar.gz</li>
+<li>编译：bash ./build.sh，生成可执行文件test</li>
+<li>运行：bash ./run.sh，输入mic.wav，ref.wav，输出out.wav</li>
+</ul>
+
 
 </body>
 </html>
